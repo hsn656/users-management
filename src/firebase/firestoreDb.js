@@ -7,6 +7,11 @@ initializeApp({
   credential: cert(serviceAccount),
 });
 
+getFirestore().settings({
+  host: "localhost:8080",
+  ssl: false,
+});
+
 const firestoreDb = getFirestore();
 
 module.exports = firestoreDb;
