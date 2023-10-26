@@ -38,6 +38,12 @@ firebase emulators:start
 cp .env-example .env
 ```
 
+- start the app.
+
+```bash 
+npm start
+```
+
 ## Notes
 - By Default system has one admin user with username: 'hsnAdmin' and password: 'admin1234'
 - you can change admin credintials by updating the '.env' file following values: (ADMIN_USERNAME - ADMIN_PASSWORD)
