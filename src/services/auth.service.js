@@ -27,12 +27,15 @@ const register = async ({ email, username, password, age }) => {
 const login = async ({ username, password }) => {
   const user = await userDAO.findByUsername({ username });
   if (!user) throw ApiError.unAuthorized("Invalid credentials");
+
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw ApiError.unAuthorized("Invalid credentials");
+
   return {
     accessToken: generateAccessToken({
       username,
       id: user.id,
+      role: user.role,
     }),
   };
 };

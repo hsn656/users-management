@@ -20,6 +20,13 @@ const findByUsername = async ({ username }) => {
     : null;
 };
 
+const findById = async ({ userId }) => {
+  const doc = await firestoreDb
+    .collection("users")
+    .doc(userId).get();
+  return doc.data();
+};
+
 const create = async ({ email, username, password, age }) => {
   const createdUserRef = await firestoreDb.collection("users").add({
     email,
@@ -36,5 +43,6 @@ const create = async ({ email, username, password, age }) => {
 module.exports = {
   findByEmail,
   findByUsername,
+  findById,
   create,
 };
