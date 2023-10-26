@@ -13,6 +13,13 @@ const register = tryCatchWrapper(async (req, res) => {
   return res.status(201).json(formatSuccessRespnse(result));
 });
 
+const login = tryCatchWrapper(async (req, res) => {
+  const { username, password } = req.body;
+  const result = await authService.login({ username, password });
+  return res.status(200).json(formatSuccessRespnse(result));
+});
+
 module.exports = {
   register,
+  login
 };

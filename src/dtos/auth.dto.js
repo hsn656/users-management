@@ -1,4 +1,5 @@
 const { Joi } = require("express-validation");
+
 const registerDto = {
   body: Joi.object({
     email: Joi.string().email().required(),
@@ -12,6 +13,14 @@ const registerDto = {
   }),
 };
 
+const loginDto = {
+  body: Joi.object({
+    username: Joi.string().required(),
+    password: Joi.string().required(),
+  }),
+};
+
 module.exports = {
   registerDto,
+  loginDto,
 };
