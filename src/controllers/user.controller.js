@@ -17,7 +17,19 @@ const updateProfile = tryCatchWrapper(async (req, res) => {
   return res.status(200).json(formatSuccessRespnse(result));
 });
 
+const search = tryCatchWrapper(async (req, res) => {
+  const { email, username, limit, page } = req.body;
+  const result = await userService.search({
+    email,
+    username,
+    limit,
+    page,
+  });
+  return res.status(200).json(formatSuccessRespnse(result));
+});
+
 module.exports = {
   getProfile,
   updateProfile,
+  search,
 };

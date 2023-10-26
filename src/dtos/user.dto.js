@@ -8,6 +8,16 @@ const updateProfileDto = {
   }),
 };
 
+const searchUsersDto = {
+  body: Joi.object({
+    email: Joi.string().optional(),
+    username: Joi.string().optional(),
+    page: Joi.number().min(1).required(),
+    limit: Joi.number().min(0).required(),
+  }),
+};
+
 module.exports = {
   updateProfileDto,
+  searchUsersDto,
 };

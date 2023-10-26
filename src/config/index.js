@@ -9,6 +9,10 @@ const config = {
   jwt: {
     secret: process.env.JWT_SECRET || "not-jwt-secret",
   },
+  algolia: {
+    appId: process.env.ALGOLIA_APP_ID || "",
+    searchKey: process.env.ALGOLIA_SEARCH_KEY || "",
+  }
 };
 
 module.exports = config;
