@@ -32,10 +32,8 @@ const register = async ({
 
 const login = async ({ username, password }) => {
   const user = await userDAO.findByUsername({ username });
-  if (!user) throw ApiError.unAuthorized("Invalid credentials");
 
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) throw ApiError.unAuthorized("Invalid credentials");
+  await validateCredential({ user, password });
 
   return {
     accessToken: generateAccessToken({
@@ -46,7 +44,29 @@ const login = async ({ username, password }) => {
   };
 };
 
+const adminlogin = async ({ username, password }) => {
+  const user = await userDAO.findByUsername({ username });
+  if (user.role !== RolesEnum.Admin)
+    throw ApiError.unAuthorized("Invalid credentials");
+  await validateCredential({ user, password });
+  return {
+    accessToken: generateAccessToken({
+      username,
+      id: user.id,
+      role: user.role,
+    }),
+  };
+};
+
+const validateCredential = async ({ user, password }) => {
+  if (!user) throw ApiError.unAuthorized("Invalid credentials");
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) throw ApiError.unAuthorized("Invalid credentials");
+};
+
 module.exports = {
   register,
   login,
+  adminlogin,
 };
