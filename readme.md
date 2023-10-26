@@ -10,7 +10,7 @@ admin can login and search in system users.
 
 ## Technology Stack
 
-- express.j
+- express.js
 - firebase functions
 - firebase firestor
 - algolia
