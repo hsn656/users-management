@@ -1,4 +1,24 @@
+const { hash } = require("bcryptjs");
+const config = require("../config");
 const firestoreDb = require("../firebase/firestoreDb");
+const { RolesEnum } = require("../config/constants");
+
+const seedAdminUser = async () => {
+  const hashedPassword = await hash(config.app.adminPassword, 10);
+
+  const adminData = {
+    username: config.app.adminUsername,
+    password: hashedPassword,
+    role: RolesEnum.Admin,
+  };
+
+  const docRef = firestoreDb.collection("users").doc("1");
+  const doc = await docRef.get();
+
+  if (doc.exists) return docRef.update(adminData);
+
+  return docRef.set(adminData);
+};
 
 const findByEmail = async ({ email }) => {
   const snapshot = await firestoreDb
@@ -25,12 +45,19 @@ const findById = async ({ userId }) => {
   return doc.data();
 };
 
-const create = async ({ email, username, password, age }) => {
+const create = async ({
+  email,
+  username,
+  password,
+  age,
+  role = RolesEnum.NormalUser,
+}) => {
   const createdUserRef = await firestoreDb.collection("users").add({
     email,
     username,
     password,
     age,
+    role,
   });
 
   return {
@@ -81,4 +108,5 @@ module.exports = {
   update,
   isUpdatedEmailUnique,
   isUpdatedUsernameUnique,
+  seedAdminUser,
 };

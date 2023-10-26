@@ -5,7 +5,13 @@ const ApiError = require("../error/api-error");
 const { RolesEnum } = require("../config/constants");
 const { generateAccessToken } = require("../helpers/jwt");
 
-const register = async ({ email, username, password, age }) => {
+const register = async ({
+  email,
+  username,
+  password,
+  age,
+  role = RolesEnum.NormalUser,
+}) => {
   const alreadyRegisteredEmail = await userDAO.findByEmail({ email });
   if (alreadyRegisteredEmail) throw ApiError.badRequest("Email already exists");
 
@@ -20,7 +26,7 @@ const register = async ({ email, username, password, age }) => {
     username,
     password: hashedPassword,
     age,
-    role: RolesEnum.NormalUser,
+    role,
   });
 };
 
