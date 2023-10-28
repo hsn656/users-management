@@ -12,6 +12,7 @@ const config = {
   algolia: {
     appId: process.env.ALGOLIA_APP_ID || "",
     searchKey: process.env.ALGOLIA_SEARCH_KEY || "",
+    adminKey: process.env.ALGOLIA_ADMIN_KEY || "",
   },
   firebase: {
     env: process.env.FIRE_BASE_ENV || "emulators",

@@ -29,7 +29,6 @@ const search = async ({ username, email, page, limit }) => {
   if (email) filters.push(`email:${email}`);
 
   const filterString = filters.join(" OR ");
-
   const result = await usersIndex.search("", {
     filters: filterString,
     attributesToRetrieve: ["username", "email", "age"],
